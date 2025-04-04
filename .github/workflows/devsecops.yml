@@ -28,7 +28,7 @@ jobs:
       - name: Run basic tests (placeholder)
         run: |
           source venv/bin/activate
-          pytest tests/
+          PYTHONPATH=. pytest tests/
 
   sast:
     name: Static Analysis (Semgrep)
