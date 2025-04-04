@@ -63,8 +63,11 @@ jobs:
           target: 'http://localhost:5000'
           fail_action: false
 
+      - name: Check if ZAP report was created
+        run: ls -lh owasp-zap-report.html
+
       - name: Upload ZAP Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3.1.3
         with:
           name: zap-report
           path: owasp-zap-report.html
