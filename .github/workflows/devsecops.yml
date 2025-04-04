@@ -1,0 +1,70 @@
+name: DevSecOps Pipeline Demo
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Run basic tests (placeholder)
+        run: |
+          echo "Running unit tests..."
+          # pytest tai muu testirunko tähän
+
+  sast:
+    name: Static Analysis (Semgrep)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Semgrep
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: 'p/default'
+
+  dast:
+    name: Dynamic Analysis (OWASP ZAP)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Start test web server (Flask)
+        run: |
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+          nohup python3 app.py &
+          sleep 10
+
+      - name: Run ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.6.0
+        with:
+          target: 'http://localhost:5000'
+          fail_action: false
+
+      - name: Upload ZAP Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: zap-report
+          path: owasp-zap-report.html
