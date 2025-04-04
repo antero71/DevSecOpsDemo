@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template_string
+from flask import Flask, request, render_template
 
 app = Flask(__name__)
 
@@ -9,7 +9,7 @@ def home():
 @app.route("/echo", methods=["GET", "POST"])
 def echo():
     data = request.args.get("input") or request.form.get("input")
-    return render_template_string("You sent: {{ data }}", data=data)
+    return render_template("echo.html", data=data)
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=5000)
