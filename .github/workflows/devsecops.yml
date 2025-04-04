@@ -27,8 +27,8 @@ jobs:
 
       - name: Run basic tests (placeholder)
         run: |
-          echo "Running unit tests..."
-          # pytest tai muu testirunko tähän
+          source venv/bin/activate
+          pytest tests/
 
   sast:
     name: Static Analysis (Semgrep)
