@@ -71,3 +71,8 @@ jobs:
         with:
           name: zap-report
           path: owasp-zap-report.html
+
+      - name: Copy ZAP report to docs folder
+        run: |
+          mkdir -p docs
+          cp owasp-zap-report.html docs/index.html
