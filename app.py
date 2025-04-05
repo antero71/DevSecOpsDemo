@@ -6,11 +6,18 @@ app = Flask(__name__)
 def set_security_headers(resp):
     resp.headers['X-Frame-Options'] = 'DENY'
     resp.headers['X-Content-Type-Options'] = 'nosniff'
-    resp.headers['Content-Security-Policy'] = "default-src 'self'; object-src 'none'; base-uri 'self';"
     resp.headers['Permissions-Policy'] = 'geolocation=(), camera=(), microphone=()'
     resp.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
     resp.headers['Pragma'] = 'no-cache'
     resp.headers['Expires'] = '0'
+    resp.headers['Content-Security-Policy'] = (
+        "default-src 'self'; "
+        "object-src 'none'; "
+        "base-uri 'self'; "
+        "frame-ancestors 'none'; "
+        "script-src 'self'; "
+        "style-src 'self';"
+    )
     return resp
 
 @app.route("/")
