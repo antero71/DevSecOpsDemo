@@ -50,7 +50,7 @@ jobs:
       report-path: ${{ steps.zap.outputs.report-path }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Start test web server (Flask)
         run: |
@@ -73,7 +73,7 @@ jobs:
           cp owasp-zap-report.html shared/zap-report.html
 
       - name: Upload artifact manually
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: zap-report
           path: shared/zap-report.html
