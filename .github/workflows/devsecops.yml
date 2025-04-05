@@ -52,12 +52,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Start test web server (Flask)
+      - name: Start Flask with Gunicorn
         run: |
           python3 -m venv venv
           source venv/bin/activate
           pip install -r requirements.txt
-          nohup python3 app.py &
+          nohup gunicorn --bind 127.0.0.1:5000 --no-sendfile --no-server-header app:app &
           sleep 10
 
       - name: Run ZAP Baseline Scan
