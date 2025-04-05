@@ -73,7 +73,7 @@ jobs:
           cp owasp-zap-report.html shared/zap-report.html
 
       - name: Upload artifact manually
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: zap-report
           path: shared/zap-report.html
